@@ -13,7 +13,7 @@ if [ -f "/usr/bin/podman" ]; then
     container=podman
 fi
 
-$container run -it --rm \
+sudo $container run -it --rm \
   -p 8080:8080 \
   -v $HOST_CONFIG_DIR:/home/user/.config/spotify \
   -v $XDG_RUNTIME_DIR/pulse:/run/user/1000/pulse \

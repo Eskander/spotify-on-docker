@@ -8,4 +8,4 @@ if [ -f "/usr/bin/podman" ]; then
     container=podman
 fi
 
-$container build -t "spotify-on-docker:latest" .
+sudo $container build -t "spotify-on-docker:latest" .
