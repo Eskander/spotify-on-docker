@@ -22,10 +22,10 @@ echo "Done."
 # Start PulseAudio
 echo "======== PulseAudio ========"
 echo "Starting audio server ..."
-sudo -H -u user bash -c pulseaudio &>/dev/null &
+sudo -H -u user bash -c pulseaudio &
 echo "Done."
 
 # Start PulseAudio
 echo "======== Spotify Client ========"
 echo "Starting Spotify ..."
-sudo -H -u user bash -c spotify --disable-gpu &>/dev/null
+sudo -H -u user bash -c spotify --disable-gpu
