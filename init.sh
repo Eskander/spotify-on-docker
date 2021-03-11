@@ -1,7 +1,9 @@
 #!/bin/bash
 mkdir -p /home/user/.config/spotify
 chown -R user:user /home/user/.config/spotify
-ln -s /usr/share/novnc/vnc.html /usr/share/novnc/index.html
+if [ ! -f "/usr/share/novnc/index.html" ]; then
+    ln -s /usr/share/novnc/vnc.html /usr/share/novnc/index.html
+fi
 
 # Update Spotify
 printf "\t======== Update ========\n"
@@ -13,6 +15,9 @@ printf "Done.\n"
 # Create virtual display
 printf "\t======== Display ========\n"
 printf "Starting Xvfb server ...\n"
+if [ -f "/tmp/.X99-lock" ]; then
+    rm -f /tmp/.X99-lock
+fi
 Xvfb :99 -screen 0 1024x768x16 &
 export DISPLAY=:99
 x11vnc -display :99 -nopw -forever -quiet -geometry 1024x768 &
