@@ -5,7 +5,13 @@ LABEL maintainer="Eskander Bejaoui"
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt update \
     && apt install --yes --no-install-recommends \
-    add-apt-key curl pulseaudio xvfb x11vnc sudo novnc
+    add-apt-key \
+    curl \
+    novnc \
+    pulseaudio \
+    sudo \
+    x11vnc \
+    xvfb
 
 # Download Spotify client
 RUN curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | apt-key add - \
@@ -18,15 +24,16 @@ RUN curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | apt-key a
 RUN useradd -u 1000 -m -d /home/user -s /bin/bash user \
     && usermod -aG audio user \
     && echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user \
-    && chmod 0440 /etc/sudoers.d/$USER \
+    && chmod 0440 /etc/sudoers.d/user \
     && mkdir -p /home/user/.config/pulse \
+    && mkdir -p /home/user/.config/spotify \
     && chown -R user:user /home/user
 
 # Configure container
 COPY pulse-client.conf /etc/pulse/client.conf
-ADD init.sh /init.sh
-RUN ["chmod", "+x", "/init.sh"]
+COPY init.sh /init.sh
 ENTRYPOINT ["/init.sh"]
+RUN chmod +x /init.sh
 
 EXPOSE 8080
 VOLUME /run/user/1000/pulse /home/user/.config/spotify

@@ -1,5 +1,4 @@
 #!/bin/bash
-mkdir -p /home/user/.config/spotify
 chown -R user:user /home/user/.config/spotify
 if [ ! -f "/usr/share/novnc/index.html" ]; then
     ln -s /usr/share/novnc/vnc.html /usr/share/novnc/index.html
