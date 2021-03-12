@@ -1,21 +1,22 @@
 #!/usr/bin/env bash
 
 DEVICE_NAME=Spotify-on-Docker
-HOST_CONFIG_DIR=/home/$USER/.config/spotify
+CONFIG_DIR=/home/$USER/.config/spotify
+PORT=8080
 
-mkdir -p $HOST_CONFIG_DIR
-
-container=docker
-
-# If podman detected
+# Check for podman or docker
 if [ -f "/usr/bin/podman" ]; then
-    echo "Podman detected"
     container=podman
+else
+    container=docker
 fi
 
+mkdir -p $CONFIG_DIR
+
 sudo $container run -it --rm \
-  -p 8080:8080 \
-  -v $HOST_CONFIG_DIR:/home/user/.config/spotify \
-  -v $XDG_RUNTIME_DIR/pulse:/run/user/1000/pulse \
-  -h $DEVICE_NAME \
+  --publish $PORT:8080 \
+  --volume $CONFIG_DIR:/home/user/.config/spotify \
+  --volume $XDG_RUNTIME_DIR/pulse:/run/user/1000/pulse \
+  --hostname $DEVICE_NAME \
+  --name $DEVICE_NAME \
   spotify-on-docker:latest
