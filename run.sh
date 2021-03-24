@@ -19,5 +19,4 @@ sudo $container run -it --rm \
   --volume $XDG_RUNTIME_DIR/pulse:/run/user/1000/pulse \
   --hostname $DEVICE_NAME \
   --name $DEVICE_NAME \
-  --restart on-failure \
   spotify-on-docker:latest
