@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-container=docker
-
-# If podman detected
+# Check for podman or docker
 if [ -f "/usr/bin/podman" ]; then
-    echo "Podman detected"
     container=podman
+else
+    container=docker
 fi
 
 sudo $container build -t "spotify-on-docker:latest" .
