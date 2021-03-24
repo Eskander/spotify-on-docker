@@ -19,15 +19,41 @@ if [ -f "/tmp/.X99-lock" ]; then
 fi
 Xvfb :99 -screen 0 1024x768x16 &
 export DISPLAY=:99
+if pgrep -x "Xvfb" >/dev/null
+then
+    printf "Done.\n"
+else
+    exit 1
+fi
+
+printf "Starting X11vnc ...\n"
 x11vnc -display :99 -nopw -forever -quiet -geometry 1024x768 &
+if pgrep -x "x11vnc" >/dev/null
+then
+    printf "Done.\n"
+else
+    exit 1
+fi
+
+printf "Starting noVNC ...\n"
 websockify -D --web=/usr/share/novnc/ 8080 localhost:5900 &
-printf "Done.\n"
+if pgrep -x "websockify" >/dev/null
+then
+    printf "Done.\n"
+else
+    exit 1
+fi
 
 # Start PulseAudio
 printf "\t======== Audio ========\n"
 printf "Starting PulseAudio ...\n"
 sudo -H -u user bash -c pulseaudio 2>/dev/null &
-printf "Done.\n"
+if pgrep -x "pulseaudio" >/dev/null
+then
+    printf "Done.\n"
+else
+    exit 1
+fi
 
 # Start Spotify
 printf "\t======== Client ========\n"
@@ -37,3 +63,4 @@ printf "|                                                  |\n"
 printf "|   Login to Spotify: http://localhost:8080/       |\n"
 printf "|__________________________________________________|\n\n"
 sudo -H -u user bash -c "spotify --disable-gpu --disable-software-rasterizer --no-zygote"
+exit 0
