@@ -50,7 +50,7 @@ fi
 # Start PulseAudio
 printf "\t======== Audio ========\n"
 printf "Starting PulseAudio ...\n"
-sudo -H -u user bash -c pulseaudio >/dev/null &
+sudo -H -u user bash -c pulseaudio &>/dev/null &
 sleep 1
 if pgrep -x "pulseaudio" >/dev/null
 then
@@ -66,5 +66,5 @@ printf " __________________________________________________\n"
 printf "|                                                  |\n"
 printf "|   Login to Spotify: http://localhost:8080/       |\n"
 printf "|__________________________________________________|\n\n"
-sudo -H -u user bash -c "spotify --disable-gpu --disable-software-rasterizer --no-zygote >/dev/null"
+sudo -H -u user bash -c "spotify --disable-gpu --disable-software-rasterizer --no-zygote" &>/dev/null
 exit 0
