@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Set device name to show on Spotify Connect
 DEVICE_NAME=Spotify-on-Docker
 CONFIG_DIR=/home/$USER/.config/spotify
 PORT=8080
